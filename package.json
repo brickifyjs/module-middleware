@@ -1,0 +1,38 @@
+{
+  "name": "@brickify/m-middleware",
+  "version": "1.0.0",
+  "description": "Apply middleware to any methods/functions",
+  "keywords": [
+    "brickifyjs",
+    "module",
+    "function",
+    "method",
+    "hook",
+    "middleware"
+  ],
+  "author": "Nicolas RAIBAUD",
+  "license": "MIT",
+  "repository": "brickifyjs/module-middleware",
+  "scripts": {
+    "generate-docs": "cp README.md docs/index.md",
+    "test": "ospec",
+    "lint": "eslint ./lib/index.js",
+    "coverage": "istanbul cover --print both ospec",
+    "report-coverage": "codecovs"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib/index.js"
+  ],
+  "pre-commit": [
+    "generate-docs"
+  ],
+  "dependencies": {
+    "@brickify/m-gobp": "^2.0.0"
+  },
+  "devDependencies": {
+    "ospec": "^1.3.1",
+    "eslint": "^3.19.0",
+    "istanbul": "^0.4.5"
+  }
+}
