@@ -1,191 +1,170 @@
-## Module Hook
+## Module Middleware
 
-Apply hooks deeply to any methods
+Apply middleware to any methods/functions
 
 ## Statistics
 
-[![Github All Releases](https://img.shields.io/github/downloads/brickifyjs/module-merge/total.svg?style=flat-square)](https://github.com/brickifyjs/module-merge)
-[![npm](https://img.shields.io/npm/dt/@brickify/m-merge.svg?style=flat-square)](https://www.npmjs.com/package/@brickify/m-merge)
+[![Github All Releases](https://img.shields.io/github/downloads/brickifyjs/module-middleware/total.svg?style=flat-square)](https://github.com/brickifyjs/module-middleware)
+[![npm](https://img.shields.io/npm/dt/@brickify/m-middleware.svg?style=flat-square)](https://www.npmjs.com/package/@brickify/m-middleware)
 
 ## Social
-[![GitHub forks](https://img.shields.io/github/forks/brickifyjs/module-merge.svg?label=Fork&style=flat-square)](https://github.com/brickifyjs/module-merge)
-[![GitHub stars](https://img.shields.io/github/stars/brickifyjs/module-merge.svg?label=Stars&style=flat-square)](https://github.com/brickifyjs/module-merge)
-[![GitHub watchers](https://img.shields.io/github/watchers/brickifyjs/module-merge.svg?label=Watch&style=flat-square)](https://github.com/brickifyjs/module-merge)
-[![Gitter](https://img.shields.io/gitter/room/brickifyjs/module-merge.svg?style=flat-square)](https://gitter.im/brickifyjs/module-merge)
+[![GitHub forks](https://img.shields.io/github/forks/brickifyjs/module-middleware.svg?label=Fork&style=flat-square)](https://github.com/brickifyjs/module-middleware)
+[![GitHub stars](https://img.shields.io/github/stars/brickifyjs/module-middleware.svg?label=Stars&style=flat-square)](https://github.com/brickifyjs/module-middleware)
+[![GitHub watchers](https://img.shields.io/github/watchers/brickifyjs/module-middleware.svg?label=Watch&style=flat-square)](https://github.com/brickifyjs/module-middleware)
+[![Gitter](https://img.shields.io/gitter/room/brickifyjs/module-middleware.svg?style=flat-square)](https://gitter.im/brickifyjs/module-middleware)
 
 ## Project Health
 
-[![Travis branch](https://img.shields.io/travis/brickifyjs/module-merge/master.svg?style=flat-square)](https://travis-ci.org/brickifyjs/module-merge)
-[![Codecov](https://img.shields.io/codecov/c/github/brickifyjs/module-merge.svg?style=flat-square)](https://codecov.io/gh/brickifyjs/module-merge)
-[![bitHound](https://img.shields.io/bithound/dependencies/github/brickifyjs/module-merge.svg?style=flat-square)](https://www.bithound.io/github/brickifyjs/module-merge/master/dependencies/npm)
-[![bitHound](https://img.shields.io/bithound/devDependencies/github/brickifyjs/module-merge.svg?style=flat-square)](https://www.bithound.io/github/brickifyjs/module-merge/master/dependencies/npm)
-[![Website](https://img.shields.io/website/https/m-merge.js.brickify.io.svg?label=website&style=flat-square)](https://m-merge.js.brickify.io)
+[![Travis branch](https://img.shields.io/travis/brickifyjs/module-middleware/master.svg?style=flat-square)](https://travis-ci.org/brickifyjs/module-middleware)
+[![Codecov](https://img.shields.io/codecov/c/github/brickifyjs/module-middleware.svg?style=flat-square)](https://codecov.io/gh/brickifyjs/module-middleware)
+[![bitHound](https://img.shields.io/bithound/dependencies/github/brickifyjs/module-middleware.svg?style=flat-square)](https://www.bithound.io/github/brickifyjs/module-middleware/master/dependencies/npm)
+[![bitHound](https://img.shields.io/bithound/devDependencies/github/brickifyjs/module-middleware.svg?style=flat-square)](https://www.bithound.io/github/brickifyjs/module-middleware/master/dependencies/npm)
+[![Website](https://img.shields.io/website/https/m-middleware.js.brickify.io.svg?label=website&style=flat-square)](https://m-middleware.js.brickify.io)
 
 ## Install
 
 ```bash
-$ npm install @brickify/m-merge
-```
-
-## Options
-
-*Merging strategy*
-
-```js
-{
-  immutable: false, // Returns a new Object
-  keepExistingValues: true, // Older properties are kept even if they didn't exist in the new object
-  eraseMethods: true,  // Override or keep previous methods
-  eraseValues: true, // Override string || boolean || undefined || null
-  eraseNotSameType: true, // Override if not of the same type without a diff
-  eraseArray: false, // Direct Override Arrays
-  eraseObject: false // Direct Override Objects
-}
+$ npm install @brickify/m-middleware
 ```
 
 ## Usage
 
 ```js
-var merge = require('@brickify/m-merge');
 
+'use strict';
 
-// Merge if not of the same type
-var a = 1;
-var b = null;
-console.log(merge(a, b));
-// -> null
+// Import lib
+var lib = require('../lib');
 
+// Assign methods
+var mw = lib.middleware;
+var disable = lib.disable;
+var enable = lib.enable;
+var toggle = lib.toggle;
+var remove = lib.remove;
 
-// Merge if the object(s) is not immutable
-var a = {foo: 'foo'};
-var b = {bar: 'bar'};
-console.log(merge(a, b));
-// ->  {foo: 'foo'}
-
-
-// Merge object(s) and make it immutable
-var a = {foo: 'foo'};
-var b = {bar: 'bar'};
-console.log(merge(a, b, {immutable: true}));
-// ->  {foo: 'foo'}
-
-
-// Merge object(s) and erase the existing objects
-var a = {foo: 'foo'};
-var b = {bar: 'bar'};
-console.log(merge(a, b, {eraseObject: true}));
-// -> {bar: 'bar'};
-
-
-// Merge object(s) without keeping existing values
-var a = {foo: 'foo'};
-var b = {bar: 'bar2'};
-console.log(merge(a, b, {keepExistingValues: false}));
-// -> {bar: 'bar2'}
-
-
-// Merge object(s) keeping existing values
-var a = {foo: 'foo'};
-var b = {bar: 'bar'};
-console.log(merge(a, b));
-// -> {foo: 'foo', bar: 'bar'}
-
-// Merge object(s)
-var a = {foo: 'foo'};
-var b = {foo: 'foo2', bar: 'bar'};
-console.log(merge(a, b));
-// -> {foo: 'foo2', bar: 'bar'};
-
-
-// Merge object(s) without erasing the existing values
-var a = {foo: 'foo'};
-var b = {foo: 'foo2', bar: 'bar'};
-console.log(merge(a, b, {eraseValues: false}));
-// -> {foo: 'foo', bar: 'bar'}
-
-
-// Merge array < length
-var a = [0];
-var b = [0, 1];
-console.log(merge(a, b));
-// -> [0]
-
-
-// Merge array > length
-var a = [0, 1];
-var b = [0];
-console.log(merge(a, b));
-// -> [0, 1]
-
-// Merge array < length and not keepExistingValues
-var a = [0];
-var b = [0, 1];
-console.log(merge(a, b, {keepExistingValues: false}));
-// -> [0]
-
-// Merge array > length and not keepExistingValues
-var a = [0, 1];
-var b = [0];
-console.log(merge(a, b, {keepExistingValues: false}));
-// -> [0, 1]
-
-
-// Merge array not immutable
-var a = [0];
-var b = [0];
-console.log(merge(a, b));
-// -> [0]
-
-
-// Merge array immutable
-var a = [0, 1, 2];
-var b = [0, 1, 2, 3];
-var c = merge(a, b, {immutable: true});
-console.log(c);
-// -> [0, 1, 2, 3]
-
-
-// Merge methods
-var a = function () {
+// Namespace method
+var ns = {
+  foo: function (arg0) {
+    return arg0 + 1;
+  }
 };
-a.foo = true;
-var b = function () {
-    
-};
-console.log(merge(a, b));
-// -> b && b.foo
 
-// eraseArray
-var a = [0, 1, 2];
-var b = [0, 1, 2, 3];
-console.log(merge(a, b, {eraseArray: true}));
-// -> [0, 1, 2, 3]
+// First middleware
+function foo(next, arg0) {
+  return next(arg0 + 1);
+}
 
-// eraseArray immutable
-var a = [0, 1, 2];
-var b = [0, 1, 2, 3];
-var c = merge(a, b, {eraseArray: true, immutable: true});
-console.log(c);
-// -> [0, 1, 2, 3]
+// Attach NS to process for later
+process.ns = ns;
 
 
-// eraseObject
-var a = {foo: 'foo'};
-var b = {bar: 'bar'};
-console.log(merge(a, b, {eraseObject: true}));
-// -> {bar: 'bar'}
+// Attach middleware, Can be attached by an object path without context
+mw('ns.foo', foo);
+// Run method
+ns.foo(1);
+// output: 3
 
-// eraseObject immutable
-var a = {foo: 'foo'};
-var b = {bar: 'bar'};
-var c = merge(a, b, {eraseObject: true, immutable: true});
-console.log(c);
-// -> {bar: 'bar'}
+// Attach middleware, Can be attached by an object path with context
+mw('ns.foo', foo, {
+   context: ns
+});
+// Run method
+ns.foo(1);
+// output: 4  
+
+// Attach middleware, Can be a attached to a method
+ns.foo = mw(ns.foo, foo);
+// Run method
+ns.foo(1);
+// output: 5  
+
+// Attach middleware, Can have a specific index
+ns.foo = mw(ns.foo, foo, {
+   index: 6
+});
+// Run method
+ns.foo(1);
+// output: 6
+
+// Attach middleware, Can have a fewer index to be at first
+ns.foo = mw(ns.foo, foo, {
+   index: -1
+});
+// Run method
+ns.foo(1);
+// output: 7
+
+// Attach middleware, Can have a bigger index to be at last
+ns.foo = mw(ns.foo, foo, {
+   index: 20
+});
+// Run method
+ns.foo(1);
+// output: 8 
+
+// Attach middleware, Can be overrided if already exist
+ns.foo = mw(ns.foo, foo, {
+   index: 0,
+   override: true
+});
+// Run method
+ns.foo(1);
+// output: 8 
+
+// Attach middleware, Can be disabled on attached
+ns.foo = mw(ns.foo, foo, {
+   disabled: true
+});
+// Run method
+ns.foo(1);
+// output: 8 
+
+// Attached middleware, Can be programmatically disabled
+disable(ns.foo, foo);
+// Run method
+ns.foo(1);
+// output: 7 
+
+// Attached middleware, Can be programmatically enabled
+enable(ns.foo, foo);
+// Run method
+ns.foo(1);
+// output: 8
+
+// Attached middleware, Can be programmatically toggled
+toggle(ns.foo, foo);
+// Run method
+ns.foo(1);
+// output: 7 
+
+// Attached middleware, Can be programmatically removed
+remove(ns.foo, foo); // Remove disabled one... because of same function assigned previously
+remove(ns.foo, foo);
+// Run method
+ns.foo(1);
+// output: 6 
 
 ```
 
-## Input
+## Imports
 
 ```js
-merge(ObjectA, ObjectB ,{...options});
+// Import all methods
+var lib = require('@brickify/m-middleware');
+
+// Import enable method
+var enable = require('@brickify/m-middleware/enable');
+
+// Import disable method
+var disable = require('@brickify/m-middleware/disable');
+
+// Import toggle method
+var toggle = require('@brickify/m-middleware/toggle');
+
+// Import remove method
+var remove = require('@brickify/m-middleware/remove');
 ```
+
+## TODO
+* Add JSDoc, comment and Code Signature
