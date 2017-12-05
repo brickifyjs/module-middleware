@@ -34,7 +34,7 @@ $ npm install @brickify/m-middleware
 'use strict';
 
 // Import lib
-var lib = require('../lib');
+var lib = require('@brickify/m-middleware');
 
 // Assign methods
 var mw = lib.middleware;
