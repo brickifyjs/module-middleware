@@ -1,6 +1,6 @@
 {
   "name": "@brickify/m-middleware",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Apply middleware to any methods/functions",
   "keywords": [
     "brickifyjs",
@@ -22,7 +22,7 @@
   },
   "main": "lib/index.js",
   "files": [
-    "lib/index.js"
+    "lib"
   ],
   "pre-commit": [
     "generate-docs"
